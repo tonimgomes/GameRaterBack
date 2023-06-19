@@ -26,7 +26,7 @@ module.exports = (mongoose) => {
         }
     });
 
-    const Rating = mongoose.model('rating', schema);
+    const Rating = mongoose.model('ratings', schema);
 
     return Rating;
 }; 
