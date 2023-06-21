@@ -152,6 +152,7 @@ async function updateRating({ rating, game_id } = {}) {
             let newRating
              if(data.rating > 1){
                 newRating=((data.rating+rating).toFixed(2))
+                console.log(data.rating)
             }else{
                 newRating =((data.rating+rating) / 2).toFixed(2)
             };
