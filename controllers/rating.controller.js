@@ -150,7 +150,7 @@ async function updateRating({ rating, game_id } = {}) {
         .findById(game_id)
         .then(async data => {
             let newRating
-             if(data.rating == 0){
+             if(data.rating = 0){
                 newRating=((data.rating+rating).toFixed(2))
             }else{
                 newRating =((data.rating+rating) / 2).toFixed(2)
