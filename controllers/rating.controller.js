@@ -149,7 +149,7 @@ async function updateRating({ rating, game_id } = {}) {
     try {
       const game = await Game.findById(game_id);
   
-      let sumRatings = game.rating * game.numReviews;
+      let sumRatings = parseFloat(game.rating) * game.numReviews;
   
       sumRatings += rating;
   
