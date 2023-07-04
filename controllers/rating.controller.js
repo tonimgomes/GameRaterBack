@@ -149,23 +149,13 @@ async function updateRating({ rating, game_id } = {}) {
     try {
       const game = await Game.findById(game_id);
   
-      console.log('game:', game);
-  
       let sumRatings = parseFloat(game.rating) * game.numReviews;
   
-      console.log('sumRatings:', sumRatings);
-  
-      sumRatings += rating;
-  
-      console.log('sumRatings (after addition):', sumRatings);
+      sumRatings += parseFloat(rating);
   
       const numReviews = game.numReviews + 1;
   
-      console.log('numReviews:', numReviews);
-  
       const newRating = (sumRatings / numReviews).toFixed(2);
-  
-      console.log('newRating:', newRating);
   
       await Game.findByIdAndUpdate(game_id, { rating: newRating, numReviews: numReviews });
     } catch (error) {
