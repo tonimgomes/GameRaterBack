@@ -146,16 +146,20 @@ exports.delete = (req, res) => {
 }; 
 
 async function updateRating({ rating, game_id } = {}) {
-    Game
-        .findById(game_id)
-        .then(async data => {
-            let newRating
-             if(data.rating > 0){
-                newRating =((data.rating+rating) / 2).toFixed(2)
-            }else{
-                newRating =((data.rating+rating)).toFixed(2)
-            };
-            const newRatingGame = newRating;
-            await Game.findByIdAndUpdate(game_id, { rating: newRatingGame })
-        });
-}
+    try {
+      const game = await Game.findById(game_id);
+      const numReviews = game.reviews.length;
+  
+      let newRating;
+      if (numReviews > 0) {
+        newRating = ((game.rating * numReviews + rating) / (numReviews + 1)).toFixed(2);
+      } else {
+        newRating = rating.toFixed(2);
+      }
+  
+      await Game.findByIdAndUpdate(game_id, { rating: newRating });
+    } catch (error) {
+      console.error('Erro ao atualizar a nota do jogo:', error);
+      throw error;
+    }
+  }
