@@ -148,13 +148,36 @@ exports.delete = (req, res) => {
 async function updateRating({ rating, game_id } = {}) {
     try {
       const game = await Game.findById(game_id);
-      const numReviews = game.reviews.length;
+  
+      let sumRatings = game.rating * game.numReviews;
+      let numReview = game.numReviews;
+  
+      if (numReview > 0) {
+        sumRatings += rating;
+        numReview++;
+      } else {
+        numReview = 1;
+      }
+  
+      const newRating = (sumRatings / numReview).toFixed(2);
+  
+      await Game.findByIdAndUpdate(game_id, { rating: newRating, numReviews: numReview });
+    } catch (error) {
+      console.error('Erro ao atualizar a nota do jogo:', error);
+      throw error;
+    }
+  }
+
+/*
+async function updateRating({ rating, game_id } = {}) {
+    try {
+      const game = await Game.findById(game_id);
   
       let newRating;
-      if (numReviews > 0) {
-        newRating = ((game.rating * numReviews + rating) / (numReviews + 1)).toFixed(2);
+      if (game.rating > 0) {
+        newRating = ((game.rating + rating) / 2).toFixed(2);
       } else {
-        newRating = rating.toFixed(2);
+        newRating = ((game.rating + rating)).toFixed(2);
       }
   
       await Game.findByIdAndUpdate(game_id, { rating: newRating });
@@ -162,4 +185,4 @@ async function updateRating({ rating, game_id } = {}) {
       console.error('Erro ao atualizar a nota do jogo:', error);
       throw error;
     }
-  }
+  }*/

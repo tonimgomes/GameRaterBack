@@ -30,6 +30,9 @@ module.exports = (mongoose) => {
             ref: 'users',
             required: true
         },
+        numReviews: {
+            type: Number
+        },
         __v: {
             type: Number,
             select: false,
