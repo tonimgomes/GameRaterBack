@@ -150,18 +150,19 @@ async function updateRating({ rating, game_id } = {}) {
       const game = await Game.findById(game_id);
   
       let sumRatings = game.rating * game.numReviews;
-      let numReview = game.numReviews;
+      let numReviews = game.numReviews;
   
-      if (numReview > 0) {
+      if (numReviews > 0) {
         sumRatings += rating;
-        numReview++;
+        numReviews++;
       } else {
-        numReview = 1;
+        numReviews = 1;
+        sumRatings = rating;
       }
   
-      const newRating = (sumRatings / numReview).toFixed(2);
+      const newRating = (sumRatings / numReviews).toFixed(2);
   
-      await Game.findByIdAndUpdate(game_id, { rating: newRating, numReviews: numReview });
+      await Game.findByIdAndUpdate(game_id, { rating: newRating, numReviews: numReviews });
     } catch (error) {
       console.error('Erro ao atualizar a nota do jogo:', error);
       throw error;
