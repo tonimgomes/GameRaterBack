@@ -150,15 +150,10 @@ async function updateRating({ rating, game_id } = {}) {
       const game = await Game.findById(game_id);
   
       let sumRatings = game.rating * game.numReviews;
-      let numReviews = game.numReviews;
   
-      if (numReviews > 0) {
-        sumRatings += rating;
-        numReviews++;
-      } else {
-        numReviews = 1;
-        sumRatings = rating;
-      }
+      sumRatings += rating;
+  
+      const numReviews = game.numReviews + 1;
   
       const newRating = (sumRatings / numReviews).toFixed(2);
   
