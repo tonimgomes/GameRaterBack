@@ -163,22 +163,3 @@ async function updateRating({ rating, game_id } = {}) {
       throw error;
     }
   }
-
-/*
-async function updateRating({ rating, game_id } = {}) {
-    try {
-      const game = await Game.findById(game_id);
-  
-      let newRating;
-      if (game.rating > 0) {
-        newRating = ((game.rating + rating) / 2).toFixed(2);
-      } else {
-        newRating = ((game.rating + rating)).toFixed(2);
-      }
-  
-      await Game.findByIdAndUpdate(game_id, { rating: newRating });
-    } catch (error) {
-      console.error('Erro ao atualizar a nota do jogo:', error);
-      throw error;
-    }
-  }*/
